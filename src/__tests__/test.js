@@ -1,157 +1,67 @@
-import Character from '../js/Character';
-import Daemon from '../js/Daemon';
-import Undead from '../js/Undead';
-import Magician from '../js/Magician';
-import Bowman from '../js/Bowman';
-import Swordsman from '../js/Swordsman';
-import Zombie from '../js/Zombie';
+import orderByProps from '../js/sortObject';
+import destructuring from '../js/destructuring';
 
-test('testing damage(points) function with type Deamon', () => {
-  const daemon = new Daemon('test', 'Daemon');
-  daemon.damage(10);
-  const { health } = daemon;
-  const expected = 100 - (10 * (1 - 40 / 100));
-  expect(health).toBe(expected);
-});
-test('testing levelUp function with type Deamon', () => {
-  const daemon = new Daemon('test', 'Daemon');
-  daemon.levelUp();
-  const {
-    level, health, attack, defence,
-  } = daemon;
-  const result = {
-    level, health, attack, defence,
+test('testing orderByProps function', () => {
+  const obj = {
+    name: 'мечник',
+    health: 10,
+    level: 2,
+    attack: 80,
+    defence: 40,
   };
-  expect(result).toEqual({
-    level: 2, health: 100, attack: 12, defence: 48,
-  });
+
+  const expected = [
+    { key: 'name', value: 'мечник' },
+    { key: 'level', value: 2 },
+    { key: 'attack', value: 80 },
+    { key: 'defence', value: 40 },
+    { key: 'health', value: 10 },
+  ];
+
+  const result = orderByProps(obj, ['name', 'level']);
+
+  expect(result).toEqual(expected);
 });
 
-test('testing damage(points) function with type Undead', () => {
-  const undead = new Undead('test', 'Undead');
-  undead.damage(10);
-  const { health } = undead;
-  const expected = 100 - (10 * (1 - 25 / 100));
-  expect(health).toBe(expected);
-});
-test('testing levelUp function with type Undead', () => {
-  const undead = new Undead('test', 'Undead');
-  undead.levelUp();
-  const {
-    level, health, attack, defence,
-  } = undead;
-  const result = {
-    level, health, attack, defence,
+test('testing destructuring function', () => {
+  const character = {
+    name: 'Лучник',
+    type: 'Bowman',
+    health: 50,
+    level: 3,
+    attack: 40,
+    defence: 10,
+    special: [
+      {
+        id: 8,
+        name: 'Двойной выстрел',
+        icon: 'http://...',
+        description: 'Двойной выстрел наносит двойной урон',
+      },
+      {
+        id: 9,
+        name: 'Нокаутирующий удар',
+        icon: 'http://...',
+      },
+    ],
   };
-  expect(result).toEqual({
-    level: 2, health: 100, attack: 30, defence: 30,
-  });
-});
 
-test('testing damage(points) function with type Magician', () => {
-  const magician = new Magician('test', 'Magician');
-  magician.damage(10);
-  const { health } = magician;
-  const expected = 100 - (10 * (1 - 40 / 100));
-  expect(health).toBe(expected);
-});
-test('testing levelUp function with type Magician', () => {
-  const magician = new Magician('test', 'Magician');
-  magician.levelUp();
-  const {
-    level, health, attack, defence,
-  } = magician;
-  const result = {
-    level, health, attack, defence,
-  };
-  expect(result).toEqual({
-    level: 2, health: 100, attack: 12, defence: 48,
-  });
-});
+  const expected = [
+    {
+      id: 8,
+      name: 'Двойной выстрел',
+      description: 'Двойной выстрел наносит двойной урон',
+      icon: 'http://...',
+    },
+    {
+      id: 9,
+      name: 'Нокаутирующий удар',
+      description: 'Описание недоступно',
+      icon: 'http://...',
+    },
+  ];
 
-test('testing damage(points) function with type Bowman', () => {
-  const bowman = new Bowman('test', 'Bowman');
-  bowman.damage(10);
-  const { health } = bowman;
-  const expected = 100 - (10 * (1 - 25 / 100));
-  expect(health).toBe(expected);
-});
-test('testing levelUp function with type Bowman', () => {
-  const bowman = new Bowman('test', 'Bowman');
-  bowman.levelUp();
-  const {
-    level, health, attack, defence,
-  } = bowman;
-  const result = {
-    level, health, attack, defence,
-  };
-  expect(result).toEqual({
-    level: 2, health: 100, attack: 30, defence: 30,
-  });
-});
+  const result = destructuring(character);
 
-test('testing damage(points) function with type Swordsman', () => {
-  const swordsman = new Swordsman('test', 'Swordsman');
-  swordsman.damage(10);
-  const { health } = swordsman;
-  const expected = 100 - (10 * (1 - 10 / 100));
-  expect(health).toBe(expected);
-});
-test('testing levelUp function with type Swordsman', () => {
-  const swordsman = new Swordsman('test', 'Swordsman');
-  swordsman.levelUp();
-  const {
-    level, health, attack, defence,
-  } = swordsman;
-  const result = {
-    level, health, attack, defence,
-  };
-  expect(result).toEqual({
-    level: 2, health: 100, attack: 48, defence: 12,
-  });
-});
-
-test('testing damage(points) function with type Zombie', () => {
-  const zombie = new Zombie('test', 'Zombie');
-  zombie.damage(10);
-  const { health } = zombie;
-  const expected = 100 - (10 * (1 - 10 / 100));
-  expect(health).toBe(expected);
-});
-test('testing levelUp function with type Zombie', () => {
-  const zombie = new Zombie('test', 'Zombie');
-  zombie.levelUp();
-  const {
-    level, health, attack, defence,
-  } = zombie;
-  const result = {
-    level, health, attack, defence,
-  };
-  expect(result).toEqual({
-    level: 2, health: 100, attack: 48, defence: 12,
-  });
-});
-
-test('Testing errors Name', () => {
-  function testingName() {
-    return new Character('t', 'Zombie');
-  }
-
-  expect(testingName).toThrow('Имя');
-});
-test('Testing errors Type', () => {
-  function testingType() {
-    return new Character('test', 'Zombei');
-  }
-
-  expect(testingType).toThrow('Передан неверный тип персонажа');
-});
-test('Testing errors Health', () => {
-  function testingHealth() {
-    const result = new Character('test', 'Zombie');
-    result.damage(1000);
-    return result.levelUp();
-  }
-
-  expect(testingHealth).toThrow('Нельзя повысить уровень умершего персонажа');
+  expect(result).toEqual(expected);
 });
